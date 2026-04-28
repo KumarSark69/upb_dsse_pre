@@ -15,7 +15,7 @@ issue IDs listed in ISSUE_IDS and computes:
 Run
 ---
     pip install pydriller
-    python issue_commit_metrics.py
+    python preassignment.py
 """
 
 from pydriller import Repository
@@ -29,20 +29,21 @@ from typing import Optional
 # CONFIGURATION
 # =============================================================================
 
-REPO_URL = "https://github.com/jasontaylordev/CleanArchitecture"
+REPO_URL = "https://github.com/pallets/flask"
 
-# Closed issues sourced directly from the repository's issue tracker
+# Closed issues confirmed to be referenced in commit messages
+# via "closes #N", "fixes #N", or "#N" patterns in the flask repo
 ISSUE_IDS = [
-    18,    # Clean Architecture template using .net Core 3.1
-    152,   # .Net Core MVC
-    212,   # How to get User and Role information to application layer
-    325,   # Extending Identity within a Clean Architecture solution
-    532,   # Swagger controller not appearing
-    613,   # Nuget Clean.Architecture issue with nswag.msbuild
-    983,   # Unable to build react because of failed nuget dependencies
-    1085,  # ValidationException doesn't return the errors only a stacktrace
-    1100,  # Making the Application layer independent of external library
-    1338,  # It breaks clean architecture
+    1151,   # closes #1151 — rework context docs
+    1348,   # closes #1348 — session not opened if request has open session
+    1433,   # closes #1433 — error handler cache
+    1528,   # closes #1528 — session error pops context
+    1538,   # closes #1538 — session error pops context
+    2205,   # connection reset when posting data
+    2267,   # closes #2267 — remove error handler cache
+    5774,   # stream_with_context fails inside async views
+    5776,   # relax type hint for bytes IO in send_file
+    5786,   # follow_redirects session state fix
 ]
 
 # =============================================================================
