@@ -1,11 +1,12 @@
 """
-Issue-Commit Metrics Analyzer — jasontaylordev/CleanArchitecture
-=================================================================
-Scans every commit in the repo whose message references any of the
-issue IDs listed in ISSUE_IDS and computes:
+Issue-Commit Metrics Analyzer — pallets/flask
+===============================================
+Repo  : https://github.com/pallets/flask
+Issues: confirmed closed issues whose IDs appear in commit messages.
 
+Metrics calculated:
   1. Average Unique Files Changed
-     = Σ unique files (ADD / MODIFY / DELETE) per matched commit
+     = Σ unique files (ADD / MODIFY / DELETE) across matched commits
        ÷ total matched commits
 
   2. Average DMM Score
@@ -17,6 +18,7 @@ Run
     pip install pydriller
     python preassignment.py
 """
+
 
 from pydriller import Repository
 from pydriller.domain.commit import ModificationType
@@ -66,8 +68,10 @@ RELEVANT_CHANGE_TYPES = {
 
 def build_pattern(issue_ids: list) -> re.Pattern:
     """
-    Match any of the given issue IDs using common Git referencing styles:
+    Match any of the given issue IDs in a commit message.
+    Catches all common referencing styles:
         #42   fixes #42   closes #42   resolves #42   gh-42   references #42
+    Also matches bare #N references without any keyword prefix.
     """
     ids_alt = "|".join(str(i) for i in issue_ids)
     return re.compile(
@@ -90,7 +94,7 @@ def safe_float(value) -> Optional[float]:
 
 def count_unique_files(commit) -> int:
     """
-    Count unique file paths in a commit, considering only
+    Count unique file paths in a commit considering only
     ADD, MODIFY, and DELETE change types.
     """
     paths = set()
